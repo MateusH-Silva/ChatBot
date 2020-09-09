@@ -1,6 +1,11 @@
 require 'rspec'
 require 'rack/test'
+require 'ffaker'
+require 'pg_search'
 require_relative '../app.rb'
+
+dir["./spec/support/**/*.rb"].each { |f| require f }
+dir["./spec/services/**/*.rb"].each { |file| require file }
 
 set :environment, :test
 
@@ -14,4 +19,6 @@ end
 
 RSpec.configure do |c|
   c.include RSpecMixin
+  ActiveRecord::Base.logger = nil
+  ENV['LOG'] == true
 end
